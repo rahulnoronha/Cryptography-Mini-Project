@@ -11,7 +11,7 @@ This is the Mini project done for the Cryptography course taught in semester 7. 
 <li>The shift k is an integer value in between 0 and 25.</li>
 </ul>
 
-![Shift Cipher]("Images/Shift_Cipher.png")
+![Shift Cipher]("https://github.com/rahulnoronha/Cryptography-Mini-Project/blob/main/Images/Shift_Cipher.png")
 
 ----
 
@@ -23,6 +23,6 @@ This is the Mini project done for the Cryptography course taught in semester 7. 
 <li>In the Caesar cipher, the k value is fixed to 3.</li>
 </ul>
 
-![Caesar Cipher]("Images/Caesar_Cipher.png")
+![Caesar Cipher]("https://github.com/rahulnoronha/Cryptography-Mini-Project/blob/main/Images/Caesar_Cipher.png")
 
 ----
