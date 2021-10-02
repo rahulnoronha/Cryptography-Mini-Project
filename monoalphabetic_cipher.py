@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct  2 16:41:57 2021
+
+@author: nobin
+"""
 key_dict = {
     'a': 'z',
     'b': 'y',
@@ -73,44 +79,3 @@ def monoalphabetic_decrypt():
         i = get_key(i)
         c += i
     return c
-
-#Polyalphabetic/Vignere Cipher
-
-def Key_length(string, key):
-    key = list(key)
-    if len(string) == len(key):
-        return(key)
-    else:
-        for i in range(len(string) -
-                       len(key)):
-            key.append(key[i % len(key)])
-    return("" . join(key))
-     
-
-def polyalphabetic_encrypt(string, key):
-    cipher_text = []
-    for i in range(len(string)):
-        x = (ord(string[i]) +
-             ord(key[i])) % 26
-        x += ord('A')
-        cipher_text.append(chr(x))
-    return("" . join(cipher_text))
-     
-
-def polyalphabetic_decrypt(cipher_text, key):
-    orig_text = []
-    for i in range(len(cipher_text)):
-        x = (ord(cipher_text[i]) -
-             ord(key[i]) + 26) % 26
-        x += ord('A')
-        orig_text.append(chr(x))
-    return("" . join(orig_text)).lower()
-     
-string =str(input("Enter the plaintext"))
-string=string.upper()
-keyword =str(input("Enter the key"))
-key = Key_length(string, keyword)
-cipher_text = polyalphabetic_encrypt(string,key)
-print("Ciphertext :", cipher_text)
-print("Original/Decrypted Text :",
-       polyalphabetic_decrypt(cipher_text, key))
