@@ -12,6 +12,7 @@ def caesar_encipher(plaintext):
     c = (p+3) mod(26)
     
     '''
+    plaintext = plaintext.lower()
     return shift_cipher.encipher(plaintext,3)
 
 def caesar_decipher(ciphertext):
@@ -20,4 +21,5 @@ def caesar_decipher(ciphertext):
     p = (c-3) mod(26)
     
     '''
+    ciphertext = ciphertext.lower()
     return shift_cipher.decipher(ciphertext,3)

@@ -7,6 +7,7 @@ def encipher(plaintext, key):
     c = (p+k) mod(26)
     
     '''
+    plaintext = plaintext.lower()
     result = ""
     #Loop used to traverse the characters of the plaintext
     for i in range(len(plaintext)):
