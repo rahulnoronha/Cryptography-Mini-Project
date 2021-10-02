@@ -65,14 +65,14 @@ def get_key(value):
     for key, val in key_dict.items():
         if (val == value):
             return key
-def monoalphabetic_encrypt():
+def monoalphabetic_encipher():
     word = input("Enter the plain text: ")
     c = ''
     for i in word:
         i = key_dict[i]
         c += i
     return c
-def monoalphabetic_decrypt():
+def monoalphabetic_decipher():
     word = input("Enter the cipher text: ")
     c = ''
     for i in word:

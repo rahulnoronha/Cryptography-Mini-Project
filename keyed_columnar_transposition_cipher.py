@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct  2
+
+@author: Rahul Noronha
+"""
+
 #Keyed Columnar Transposition cipher combines the keyed transposition cipher 
 #and then uses transposition techniques to read ciphertext column to column
 

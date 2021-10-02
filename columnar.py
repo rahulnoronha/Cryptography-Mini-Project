@@ -1,5 +1,5 @@
 import math
-def encrypt(key, msg):
+def columnnar_encipher(key, msg):
     ciphertext = [''] * key
     for column in range(key):
         current_index = column
@@ -8,7 +8,7 @@ def encrypt(key, msg):
             current_index += key
     return ''.join(ciphertext)
 
-def decrypt(key, msg):
+def columnnar_decipher(key, msg):
     num_columns = math.ceil(len(msg) / key)
     num_rows = key
     num_shaded_boxes = (num_columns * num_rows) - len(msg)

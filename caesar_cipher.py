@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct  2
+
+@author: Rahul Noronha
+"""
+
 #A caesar cipher is a cipher in which each letter in the message is substituted by a letter 3 letters down the alphabet.
 #The shift k is an integer value in between 0 and 25. The Caesar cipher is a specialized case of the Caesar cipher.
 #In the Caesar cipher, the k value is fixed to 3.

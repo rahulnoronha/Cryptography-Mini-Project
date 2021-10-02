@@ -15,7 +15,7 @@ def Key_length(string, key):
     return("" . join(key))
      
 
-def polyalphabetic_encrypt(string, key):
+def polyalphabetic_encipher(string, key):
     cipher_text = []
     for i in range(len(string)):
         x = (ord(string[i]) +
@@ -25,7 +25,7 @@ def polyalphabetic_encrypt(string, key):
     return("" . join(cipher_text))
      
 
-def polyalphabetic_decrypt(cipher_text, key):
+def polyalphabetic_decipher(cipher_text, key):
     orig_text = []
     for i in range(len(cipher_text)):
         x = (ord(cipher_text[i]) -

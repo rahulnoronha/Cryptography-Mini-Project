@@ -7,7 +7,7 @@ Created on Sat Oct  2 16:47:14 2021
 import random
 key=[]
 
-def OTPencrypt():
+def OTPencipher():
     global key
     string_list=[]
     cipher=[]
@@ -22,7 +22,7 @@ def OTPencrypt():
         cipher_text=cipher_text+chr(letter)
     print("Cipher text is",cipher_text)
     return cipher
-def OTPdecrypt(string):
+def OTPdecipher(string):
     global key
     plaintext=[]
     text=[]

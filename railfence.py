@@ -1,4 +1,4 @@
-def encrypt(plaintext,depth):
+def railfence_encipher(plaintext,depth):
   matrix = [[] for i in range(depth)]
   rail  = 0
   var   = 1
@@ -13,7 +13,7 @@ def encrypt(plaintext,depth):
       res += j
   return res
 
-def decrypt(ciphertext,depth):
+def railfence_decipher(ciphertext,depth):
     matrix = [[] for i in range(depth)]
     rail  = 0
     var   = 1

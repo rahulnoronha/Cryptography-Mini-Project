@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct  2
+
+@author: Rahul Noronha
+"""
+
 import numpy as np
 from egcd import egcd
 import string
