@@ -66,7 +66,7 @@ def handle_odd_adjacent(plaintext):
             result_str += 'x'         
         return result_str    
 
-def encipher(plaintext,key):
+def playfair_encipher(plaintext,key):
     plaintext = plaintext.lower()
     key = key.lower()
     atoz = string.ascii_lowercase
@@ -161,7 +161,7 @@ def encipher(plaintext,key):
             result_str += f'{element0}{element1}'
     return result_str
 
-def decipher(ciphertext,key):
+def playfair_decipher(ciphertext,key):
     ciphertext = ciphertext.lower()
     key = key.lower()
     atoz = string.ascii_lowercase
