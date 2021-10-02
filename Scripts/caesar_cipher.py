@@ -11,7 +11,7 @@ Created on Sat Oct  2
 #Let us import the functions from shift_cipher.py and make key as 3 in order to create a Caesar Cipher.
 
 #Importing the python file shift_cipher.py and its functions
-import shift_cipher
+from Scripts import shift_cipher
 
 def caesar_encipher(plaintext):
     '''
@@ -20,7 +20,7 @@ def caesar_encipher(plaintext):
     
     '''
     plaintext = plaintext.lower()
-    return shift_cipher.encipher(plaintext,3)
+    return shift_cipher.shift_encipher(plaintext,3)
 
 def caesar_decipher(ciphertext):
     '''
@@ -29,4 +29,4 @@ def caesar_decipher(ciphertext):
     
     '''
     ciphertext = ciphertext.lower()
-    return shift_cipher.decipher(ciphertext,3)
+    return shift_cipher.shift_decipher(ciphertext,3)

@@ -1,7 +1,7 @@
 #A shift cipher is a cipher in which each letter in the message is substituted by a letter a few letters down the alphabet.
 #The shift k is an integer value in between 0 and 25.
 
-def encipher(plaintext, key):
+def shift_encipher(plaintext, key):
     '''
     This function takes in a plaintext p, and key k and enciphers the text using the formula given below
     c = (p+k) mod(26)
@@ -27,7 +27,7 @@ def encipher(plaintext, key):
  
     return result
 
-def decipher(ciphertext, key):
+def shift_decipher(ciphertext, key):
     '''
     This function takes in a ciphertext c, and key k and deciphers the text using the formula given below
     p = (c-k) mod(26)
