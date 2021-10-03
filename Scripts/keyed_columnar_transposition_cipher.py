@@ -58,9 +58,6 @@ def keyed_column_trasposition_decipher(ciphertext, key):
         for i in range(len(key)):
             result_text+= element[i]
     return result_text
-    
-    
-print(keyed_column_trasposition_encipher('attack tonight',[1,2,3,4,5]))
         
         
     
