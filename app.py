@@ -1,6 +1,8 @@
 #Importing tkinter and the files from the Scripts folder which was made into a placeage by adding
 #an empty __init__.py file in it
+from functools import partial  
 from tkinter import *
+from tkinter import ttk
 from Scripts import caesar_cipher
 from Scripts import shift_cipher
 from Scripts import monoalphabetic_cipher
@@ -11,28 +13,430 @@ from Scripts import hill_cipher
 from Scripts import railfence
 from Scripts import columnar
 from Scripts import keyed_columnar_transposition_cipher
+import string
+import numpy as np
+import math
+    
+def call_encipher():
+    atoz = string.ascii_lowercase
+    ATOZ = string.ascii_uppercase
+    global choice
+    global result
+    global options
+    global plain 
+    global keyvalue
+    output = ''
+    plaintext = plain.get()
+    var = choice.get()
+    if(var=='shift'):
+        key = keyvalue.get()
+        try:
+            key = int(key)
+        except Exception as e:
+            output = 'Key needs to be an integer number between 1 and 25'
+            result.configure(text=f'{output}')
+            return
+        if key<=0 or key>=26:
+            output = 'Key needs to be an integer number between 1 and 25'
+            result.configure(text=f'{output}')
+            return    
+        output = shift_cipher.shift_encipher(plaintext, key)
+        result.configure(text=f'The ciphertext is {output}')
+    elif(var=='caesar'):
+        output = caesar_cipher.caesar_encipher(plaintext)
+        result.configure(text=f'The ciphertext is {output}')
+    elif(var=='monoalpha'):
+        output = monoalphabetic_cipher.monoalphabetic_encipher(plaintext)
+        result.configure(text=f'The cipher text is {output}')
+    elif(var=='polyalpha'):
+        key = keyvalue.get()
+        key = key.upper()
+        plaintext = plaintext.upper()
+        parse=''
+        for element in key:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Key can have only alphabetical characters'
+                result.configure(text=f'{output}')
+                return
+            else:
+                parse+=element        
+        key = parse
+        if key=='' or len(key)<=0:
+            output = 'No key entered or key is too small'
+            result.configure(text=f'{output}')
+            return             
+        output = polyalphabetic_cipher.polyalphabetic_encipher(plaintext,key.upper()).lower()
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='playfair'):
+        key = keyvalue.get()
+        plaintext = plaintext
+        parse=''
+        for element in key:
+            if element not in atoz and  element not in ATOZ and element!=' ':
+                output = 'Key can have only alphabetical characters'
+                result.configure(text=f'{output}')
+                return
+            else:
+                parse+=element        
+        key = parse
+        if key=='' or len(key)<=0:
+            output = 'No key entered or key is too small'
+            result.configure(text=f'{output}')
+            return
+        output = playfair_cipher.playfair_encipher(plaintext,key)
+        result.configure(text=f'The cipher text is {output}')
+        return   
+        pass
+    elif(var=='otp'):
+        output = otp.otp_encipher(plaintext)
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif(var=='hill'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        n = len(key)
+        if(n<=1):
+            output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
+            result.configure(text=f'{output}')
+            return
+        if(math.ceil(math.sqrt(n)) == math.floor(math.sqrt(n))):
+            size = math.ceil(math.sqrt(n))
+            new = []
+            for i in range(size):
+                new.append([])
+                for j in range(size):
+                    new[i].append(key[size*i+j])
+            key = new
+            key = np.matrix(key)
+            output = hill_cipher.hill_encipher(plaintext,key)
+            result.configure(text=f'The cipher text is {output}')
+            return
+        else:
+            output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
+            result.configure(text=f'{output}')
+            return
+    elif (var=='railfence'):
+        plaintext = plaintext.lower()
+        new = ''
+        for element in plaintext:
+            if element not in atoz:
+                pass
+            else:
+                new += element
+        plaintext = new
+        key = keyvalue.get()
+        try:
+            key = int(key)
+        except Exception as e:
+            output = 'Key needs to be an integer number'
+            result.configure(text=f'{output}')
+            return
+        output = railfence.railfence_encipher(plaintext,key)
+        new = ''
+        for element in output:
+            if element not in atoz:
+                pass
+            else:
+                new += element
+        output = new
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='columnar'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Enter a list of numbers between 1 and n in any order of size n'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz:
+                pass
+            else:
+                parse += element
+        plaintext = parse
+        output = columnar.columnar_transposition_encipher(plaintext,key)
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='keycolumnar'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Enter a list of numbers between 1 and n in any order of size n'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz:
+                pass
+            else:
+                parse += element
+        plaintext = parse
+        output = keyed_columnar_transposition_cipher.keyed_columnar_transposition_encipher(plaintext,key)
+        result.configure(text=f'The cipher text is {output}')
+        return
+    else:
+        pass
+def call_decipher():
+    atoz = string.ascii_lowercase
+    ATOZ = string.ascii_uppercase
+    global choice
+    global result
+    global options
+    global plain 
+    global keyvalue
+    output = ''
+    ciphertext = plain.get()
+    var = choice.get()
+    if(var=='shift'):
+        key = keyvalue.get()
+        try:
+            key = int(key)
+        except Exception as e:
+            output = 'Key needs to be an integer number between 1 and 25'
+            result.configure(text=f'{output}')
+            return
+        if key<=0 or key>=26:
+            output = 'Key needs to be an integer number between 1 and 25'
+            result.configure(text=f'{output}')
+            return    
+        output = shift_cipher.shift_decipher(ciphertext, key)
+        result.configure(text=f'The ciphertext is {output}')
+    elif(var=='caesar'):
+        output = caesar_cipher.caesar_decipher(ciphertext)
+        result.configure(text=f'The ciphertext is {output}')
+    elif(var=='monoalpha'):
+        output = monoalphabetic_cipher.monoalphabetic_decipher(ciphertext)
+        output = output.lower()
+        result.configure(text=f'The cipher text is {output}')
+    elif(var=='polyalpha'):
+        key = keyvalue.get()
+        key = key.upper()
+        ciphertext = ciphertext.upper()
+        parse=''
+        for element in key:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Key can have only alphabetical characters'
+                result.configure(text=f'{output}')
+                return
+            else:
+                parse+=element        
+        key = parse
+        if key=='' or len(key)<=0:
+            output = 'No key entered or key is too small'
+            result.configure(text=f'{output}')
+            return             
+        output = polyalphabetic_cipher.polyalphabetic_decipher(ciphertext.upper(),key.upper()).lower()
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='playfair'):
+        key = keyvalue.get()
+        ciphertext = ciphertext
+        parse=''
+        for element in key:
+            if element not in atoz and  element not in ATOZ and element!=' ':
+                output = 'Key can have only alphabetical characters'
+                result.configure(text=f'{output}')
+                return
+            else:
+                parse+=element        
+        key = parse
+        if key=='' or len(key)<=0:
+            output = 'No key entered or key is too small'
+            result.configure(text=f'{output}')
+            return
+        output = playfair_cipher.playfair_decipher(ciphertext,key)
+        result.configure(text=f'The cipher text is {output}')
+        return   
+        pass
+    elif(var=='otp'):
+        output = otp.otp_encipher(ciphertext)
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif(var=='hill'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        n = len(key)
+        if(n<=1):
+            output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
+            result.configure(text=f'{output}')
+            return
+        if(math.ceil(math.sqrt(n)) == math.floor(math.sqrt(n))):
+            size = math.ceil(math.sqrt(n))
+            new = []
+            for i in range(size):
+                new.append([])
+                for j in range(size):
+                    new[i].append(key[size*i+j])
+            key = new
+            key = np.matrix(key)
+            output = hill_cipher.hill_decipher(ciphertext,key)
+            result.configure(text=f'The cipher text is {output}')
+            return
+        else:
+            output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
+            result.configure(text=f'{output}')
+            return
+    elif (var=='railfence'):
+        ciphertext = ciphertext.lower()
+        new = ''
+        for element in ciphertext:
+            if element not in atoz:
+                pass
+            else:
+                new += element
+        ciphertext = new
+        key = keyvalue.get()
+        try:
+            key = int(key)
+        except Exception as e:
+            output = 'Key needs to be an integer number'
+            result.configure(text=f'{output}')
+            return
+        output = railfence.railfence_decipher(ciphertext,key)
+        new = ''
+        for element in output:
+            if element not in atoz:
+                pass
+            else:
+                new += element
+        output = new
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='columnar'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Enter a list of numbers between 1 and n in any order of size n'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        ciphertext = ciphertext.lower()
+        parse=''
+        for element in ciphertext:
+            if element not in atoz:
+                pass
+            else:
+                parse += element
+        ciphertext = parse
+        output = columnar.columnar_transposition_decipher(ciphertext,key)
+        output = output.lower()
+        result.configure(text=f'The cipher text is {output}')
+        return
+    elif (var=='keycolumnar'):
+        key = keyvalue.get()
+        key = key.split(',')
+        new = []
+        for keys in key:
+            try:
+                new.append(int(keys))
+            except Exception as e:
+                output = 'Enter a list of numbers between 1 and n in any order of size n'
+                result.configure(text=f'{output}')
+                return
+                
+        key = new
+        ciphertext = ciphertext.lower()
+        parse=''
+        for element in ciphertext:
+            if element not in atoz:
+                pass
+            else:
+                parse += element
+        ciphertext = parse
+        output = keyed_columnar_transposition_cipher.keyed_columnar_transposition_decipher(ciphertext,key)
+        output = output.lower()
+        result.configure(text=f'The cipher text is {output}')
+        return
+    else:
+        pass
+    pass
 
-#-----------------------------------------------------Main Window------------------------------------------------------
+
+#-Main Window-
 window = Tk()
+plain = StringVar()
+keyvalue = StringVar()
+choice = StringVar()
+options = [
+    'shift',
+    'caesar',
+    'monoalpha',
+    'polyalpha',
+    'playfair',
+    'otp',
+    'hill',
+    'railfence',
+    'columnar',
+    'keycolumnar'    
+]
+choice.set('shift')
 width= window.winfo_screenwidth()               
 height= window.winfo_screenheight()               
 window.geometry("%dx%d" % (width, height))
 window.title('Cipher Desktop Application')
-window.resizable('false','true')
-window.minsize(width=width, height=300)
+window.resizable('false','false')
 window.configure(bg="#f0f6fb")
-main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 42), bg="#f0f6fb").place(relx=0.2, rely = 0.1, relwidth=0.6, relheight=0.2)
-shift_button = Button(window, text="Shift Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.02, rely = 0.4)
-caesar_button = Button(window, text="Caesar Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.22, rely = 0.4)
-mono_button = Button(window, text="Monoalphabetic Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.42, rely = 0.4)
-poly_button = Button(window, text="Polyalphabetic Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.62, rely = 0.4)
-playfair_button = Button(window, text="Playfair Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.82, rely = 0.4)
-otp_button = Button(window, text="One Time Pad Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.02, rely = 0.7)
-hill_button = Button(window, text="Hill Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.22, rely = 0.7)
-railfence_button = Button(window, text="Railfence Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.42, rely = 0.7)
-col_transpos_button = Button(window, text="Columnar Transposition Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.62, rely = 0.7)
-key_col_transpos_button = Button(window, text="Keyed Columnar Transposition Cipher", fg='black', bg='light gray').place(relheight=0.2, relwidth=0.15, relx = 0.82, rely = 0.7)
+dropdown = OptionMenu(window, choice, *options)
+dropdown.pack(side='left', padx = 20)
+main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 22), bg="#f0f6fb")
+main_window_text.place(relx=0.1, rely = 0, relwidth=0.8, relheight=0.2)
+result = Label(window, text='', font=("Helvetica", 22), bg="#f0f6fb" )
+result.place(relx=0.1, rely = 0.2, relwidth=0.8, relheight=0.1)
+main_entry_key = Entry(window, textvariable=plain, width = 40)
+main_entry_key.place(relx = 0.2, rely = 0.3, relwidth = 0.3, relheight = 0.2)
+main_entry_key = Entry(window, textvariable=keyvalue, width = 40)
+main_entry_key.place(relx = 0.5, rely = 0.3, relwidth = 0.3, relheight = 0.2)
+plaintext = Label(window,text='Enter the plaintext', bg="#f0f6fb", font=('Helvetice',12))
+plaintext.place(relx = 0.2, rely = 0.5, relwidth = 0.2, relheight = 0.1)
+key = Label(window,text='Enter the key', bg="#f0f6fb", font=('Helvetica',12))
+key.place(relx = 0.45, rely = 0.5, relwidth = 0.4, relheight = 0.1)
+main_enter_encipher = Button(window, text='Encipher', command = call_encipher)
+main_enter_encipher.place(relx = 0.3, rely = 0.7, relwidth = 0.2, relheight = 0.2)
+main_enter_decipher = Button(window, text='Decipher', command = call_decipher)
+main_enter_decipher.place(relx = 0.5, rely = 0.7, relwidth = 0.2, relheight = 0.2)
 window.mainloop()
+
 
 
 

@@ -28,34 +28,30 @@ def matrix_inv_mod(matrix, number):
     return matrix_modulus_inv
 
 def hill_encipher(plaintext, K):
-    Kinv = matrix_inv_mod(K, len(atoz))
-    if(isinstance(Kinv,int)==1):
-        plaintext = plaintext.lower()
-        result_text = ""
-        plaintext_in_numbers = []
-        for letter in plaintext:
-            plaintext_in_numbers.append(letter_to_index[letter])
-        split_plaintext = [
-            plaintext_in_numbers[i : i + int(K.shape[0])]
-            for i in range(0, len(plaintext_in_numbers), int(K.shape[0]))
-        ]
-        for P in split_plaintext:
-            P = np.transpose(np.asarray(P))[:, np.newaxis]
-            while P.shape[0] != K.shape[0]:
-                P = np.append(P, letter_to_index['x'])[:, np.newaxis]
-            numbers = np.dot(K, P) % len(atoz)
-            n = numbers.shape[0]
-            for index in range(n):
-                number = int(numbers[index, 0])
-                result_text += index_to_letter[number]
-        return result_text
-    else:
-        return 'Singular Matrix'
+    plaintext = plaintext.lower()
+    result_text = ""
+    plaintext_in_numbers = []
+    for letter in plaintext:
+        plaintext_in_numbers.append(letter_to_index[letter])
+    split_plaintext = [
+        plaintext_in_numbers[i : i + int(K.shape[0])]
+        for i in range(0, len(plaintext_in_numbers), int(K.shape[0]))
+    ]
+    for P in split_plaintext:
+        P = np.transpose(np.asarray(P))[:, np.newaxis]
+        while P.shape[0] != K.shape[0]:
+            P = np.append(P, letter_to_index['x'])[:, np.newaxis]
+        numbers = np.dot(K, P) % len(atoz)
+        n = numbers.shape[0]
+        for index in range(n):
+            number = int(numbers[index, 0])
+            result_text += index_to_letter[number]
+    return result_text
 
 def hill_decipher(ciphertext, K):
     ciphertext = ciphertext.lower()
     Kinv = matrix_inv_mod(K, len(atoz))
-    if(isinstance(Kinv,int)==1):
+    if(str(Kinv)!='Singular Matrix'):
         result_text = ""
         ciphertext_in_numbers = []
 

@@ -7,11 +7,10 @@ Created on Sat Oct  2 16:47:14 2021
 import random
 key=[]
 
-def otp_encipher():
+def otp_encipher(string):
     global key
     string_list=[]
     cipher=[]
-    string=str(input("Enter the String to be encrypted"))
     for letter in string:
         key.append(random.choice(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']))
         string_list.append(letter) 
@@ -21,7 +20,7 @@ def otp_encipher():
     for letter in cipher:
         cipher_text=cipher_text+chr(letter)
     print("Cipher text is",cipher_text)
-    return cipher
+    return cipher_text
 def otp_decipher(string):
     global key
     plaintext=[]

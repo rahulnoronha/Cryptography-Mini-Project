@@ -9,7 +9,7 @@ import string
 #Keyed Columnar Transposition cipher combines the keyed transposition cipher 
 #and then uses transposition techniques to read ciphertext column to column
 
-def keyed_column_trasposition_encipher(plaintext, key):
+def keyed_columnar_transposition_encipher(plaintext, key):
     atoz = string.ascii_lowercase
     plaintext = plaintext.lower()
     new=''
@@ -20,7 +20,6 @@ def keyed_column_trasposition_encipher(plaintext, key):
             new+=i
     plaintext = new
     key_map = dict(zip(range(0,len(key)),key))
-    print(key_map)
     while(len(plaintext)%len(key)!=0):
         plaintext+='x'
     row_wise = ['' for i in range(int(round(len(plaintext)/len(key))))]
@@ -31,18 +30,16 @@ def keyed_column_trasposition_encipher(plaintext, key):
     transposed = ['' for i in range(int(round(len(plaintext)/len(key))))]
     for ind,element in enumerate(row_wise):
         for index in range(len(element)):
-            transposed[ind]+=element[key_map[index]-1]
-    print(transposed)    
+            transposed[ind]+=element[key_map[index]-1]  
     result_text = ''
     for i in range(len(key)):
         for element in transposed:
             result_text+= element[i]
     return result_text
     
-def keyed_column_trasposition_decipher(ciphertext, key):
+def keyed_columnar_transposition_decipher(ciphertext, key):
     ciphertext = ciphertext.lower()
     key_map = dict(zip(key,range(0,len(key))))
-    print(key_map)
     col_wise = ['' for i in range(int(round(len(ciphertext)/len(key))))]
     for i in range(len(key)):
         for j in range(int(round(len(ciphertext)/len(key)))):
@@ -50,8 +47,7 @@ def keyed_column_trasposition_decipher(ciphertext, key):
     transposed = ['' for i in range(int(round(len(ciphertext)/len(key))))]
     for ind,element in enumerate(col_wise):
         for index in range(len(element)):
-            transposed[ind]+=element[key_map[index+1]]
-    print(transposed)    
+            transposed[ind]+=element[key_map[index+1]] 
     result_text = ''
 
     for element in transposed:

@@ -17,6 +17,8 @@ def Key_length(string, key):
 
 def polyalphabetic_encipher(string, key):
     cipher_text = []
+    if(len(string)!=len(key)):
+      key = Key_length(string, key)  
     for i in range(len(string)):
         x = (ord(string[i]) +
              ord(key[i])) % 26
@@ -26,6 +28,8 @@ def polyalphabetic_encipher(string, key):
      
 
 def polyalphabetic_decipher(cipher_text, key):
+    if(len(cipher_text)!=len(key)):
+      key = Key_length(cipher_text, key) 
     orig_text = []
     for i in range(len(cipher_text)):
         x = (ord(cipher_text[i]) -
