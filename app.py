@@ -22,6 +22,15 @@ import webbrowser
 def browser():
     link = "help.pdf"
     webbrowser.open(link)
+
+
+def clearscreen():
+    global result
+    global main_entry_plain
+    global main_entry_key
+    result.configure(text='')
+    main_entry_plain.delete(0, 'end')
+    main_entry_key.delete(0, 'end')
         
 def call_encipher():
     atoz = string.ascii_lowercase
@@ -422,23 +431,27 @@ height= window.winfo_screenheight()
 window.geometry("%dx%d" % (width, height))
 window.title('Cipher Desktop Application')
 window.resizable('false','false')
-window.configure(bg="#f0f6fb")
+window.configure(bg="#9992ff")
 dropdown = OptionMenu(window, choice, *options)
-dropdown.pack(side='left', padx = 20)
-main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 22), bg="#f0f6fb")
-main_window_text.place(relx=0.1, rely = 0, relwidth=0.8, relheight=0.2)
+dropdown.place(relx = 0.45, rely = 0.35, relwidth=0.1, relheight=0.1)
+clear_window_text = Button(window,text="Clear", command = clearscreen)
+clear_window_text.place(relx=0.85, rely = 0, relwidth=0.05, relheight=0.05)
+exit_window = Button(window,text="Exit", command = window.destroy)
+exit_window.place(relx=0.95, rely = 0, relwidth=0.05, relheight=0.05)
+main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 22), bg="#9992ff")
+main_window_text.place(relx=0.2, rely = 0, relwidth=0.6, relheight=0.2)
 help_window_text = Button(window,text="Help", command = browser)
-help_window_text.place(relx=0.9, rely = 0, relwidth=0.1, relheight=0.1)
-result = Label(window, text='', font=("Helvetica", 22), bg="#f0f6fb" )
+help_window_text.place(relx=0.9, rely = 0, relwidth=0.05, relheight=0.05)
+result = Label(window, text='', font=("Helvetica", 22), bg="#9992ff" )
 result.place(relx=0.1, rely = 0.2, relwidth=0.8, relheight=0.1)
-main_entry_key = Entry(window, textvariable=plain, width = 40)
-main_entry_key.place(relx = 0.2, rely = 0.3, relwidth = 0.3, relheight = 0.2)
+main_entry_plain = Entry(window, textvariable=plain, width = 40)
+main_entry_plain.place(relx = 0.1, rely = 0.3, relwidth = 0.3, relheight = 0.2)
 main_entry_key = Entry(window, textvariable=keyvalue, width = 40)
-main_entry_key.place(relx = 0.5, rely = 0.3, relwidth = 0.3, relheight = 0.2)
-plaintext = Label(window,text='Enter the plaintext', bg="#f0f6fb", font=('Helvetice',12))
-plaintext.place(relx = 0.2, rely = 0.5, relwidth = 0.2, relheight = 0.1)
-key = Label(window,text='Enter the key', bg="#f0f6fb", font=('Helvetica',12))
-key.place(relx = 0.45, rely = 0.5, relwidth = 0.4, relheight = 0.1)
+main_entry_key.place(relx = 0.6, rely = 0.3, relwidth = 0.3, relheight = 0.2)
+plaintext = Label(window,text='Enter the plaintext', bg="#9992ff", font=('Helvetice',12))
+plaintext.place(relx = 0.14, rely = 0.5, relwidth = 0.2, relheight = 0.1)
+key = Label(window,text='Enter the key', bg="#9992ff", font=('Helvetica',12))
+key.place(relx = 0.55, rely = 0.5, relwidth = 0.4, relheight = 0.1)
 main_enter_encipher = Button(window, text='Encipher', command = call_encipher)
 main_enter_encipher.place(relx = 0.3, rely = 0.7, relwidth = 0.2, relheight = 0.2)
 main_enter_decipher = Button(window, text='Decipher', command = call_decipher)
