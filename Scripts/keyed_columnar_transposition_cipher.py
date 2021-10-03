@@ -4,12 +4,21 @@ Created on Sat Oct  2
 
 @author: Rahul Noronha
 """
+import string
 
 #Keyed Columnar Transposition cipher combines the keyed transposition cipher 
 #and then uses transposition techniques to read ciphertext column to column
 
 def keyed_column_trasposition_encipher(plaintext, key):
+    atoz = string.ascii_lowercase
     plaintext = plaintext.lower()
+    new=''
+    for i in plaintext:
+        if(i not in atoz):
+            pass
+        else:
+            new+=i
+    plaintext = new
     key_map = dict(zip(range(0,len(key)),key))
     print(key_map)
     while(len(plaintext)%len(key)!=0):
@@ -51,7 +60,7 @@ def keyed_column_trasposition_decipher(ciphertext, key):
     return result_text
     
     
-        
+print(keyed_column_trasposition_encipher('attack tonight',[1,2,3,4,5]))
         
         
     

@@ -25,6 +25,7 @@ def matrix_inv_mod(matrix, number):
     return matrix_modulus_inv
 
 def hill_encipher(plaintext, K):
+    plaintext = plaintext.lower()
     result_text = ""
     plaintext_in_numbers = []
     for letter in plaintext:
@@ -45,6 +46,7 @@ def hill_encipher(plaintext, K):
     return result_text
 
 def hill_decipher(ciphertext, K):
+    ciphertext = ciphertext.lower()
     Kinv = matrix_inv_mod(K, len(atoz))
     result_text = ""
     ciphertext_in_numbers = []
