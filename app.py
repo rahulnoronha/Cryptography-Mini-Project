@@ -16,7 +16,13 @@ from Scripts import keyed_columnar_transposition_cipher
 import string
 import numpy as np
 import math
-    
+import webbrowser
+
+
+def browser():
+    link = "help.pdf"
+    webbrowser.open(link)
+        
 def call_encipher():
     atoz = string.ascii_lowercase
     ATOZ = string.ascii_uppercase
@@ -421,6 +427,8 @@ dropdown = OptionMenu(window, choice, *options)
 dropdown.pack(side='left', padx = 20)
 main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 22), bg="#f0f6fb")
 main_window_text.place(relx=0.1, rely = 0, relwidth=0.8, relheight=0.2)
+help_window_text = Button(window,text="Help", command = browser)
+help_window_text.place(relx=0.9, rely = 0, relwidth=0.1, relheight=0.1)
 result = Label(window, text='', font=("Helvetica", 22), bg="#f0f6fb" )
 result.place(relx=0.1, rely = 0.2, relwidth=0.8, relheight=0.1)
 main_entry_key = Entry(window, textvariable=plain, width = 40)
