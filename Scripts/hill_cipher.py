@@ -79,6 +79,3 @@ def hill_decipher(ciphertext, K):
         return result_text
     else:
         return 'Matrix is not invertible in modulo 26'
-k = np.matrix([[1,2,3],[4,5,6],[7,8,9]])
-print(hill_encipher('RahulNoronha',k))
-print(hill_decipher(hill_encipher('RahulNoronha',k),k))
