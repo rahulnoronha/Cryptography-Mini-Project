@@ -43,13 +43,11 @@ def columnar_transposition_decipher(ciphertext, key):
     for i in range(int(round(len(ciphertext)/len(key)))):
         for j in range(len(key)):
             row_wise[i]+= ciphertext[i*len(key)+j]
-    print(row_wise)
     transposed = ['' for i in range(int(round(len(ciphertext)/len(key))))]
     for ind,element in enumerate(row_wise):
         for index in range(len(element)):
             transposed[ind]+=element[key_map[index+1]]   
     result_text = ''
-    print(transposed)
     for element in transposed:
         for i in range(len(key)):
             result_text+= element[i]

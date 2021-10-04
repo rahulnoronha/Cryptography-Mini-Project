@@ -19,8 +19,7 @@ def otp_encipher(string):
     cipher_text=""
     for letter in cipher:
         cipher_text=cipher_text+chr(letter)
-    print("Cipher text is",cipher_text)
-    return cipher_text
+    return str(cipher)+'/'+cipher_text
 def otp_decipher(string):
     global key
     plaintext=[]

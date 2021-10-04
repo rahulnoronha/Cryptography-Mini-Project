@@ -2,6 +2,7 @@
 #an empty __init__.py file in it
 from functools import partial  
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from Scripts import caesar_cipher
 from Scripts import shift_cipher
@@ -28,7 +29,10 @@ def clearscreen():
     global result
     global main_entry_plain
     global main_entry_key
-    result.configure(text='')
+    result.configure(state='normal')
+    result.delete(0,END)
+    result.insert(0,'')
+    result.configure(state='readonly',bg="#63b8ff")
     main_entry_plain.delete(0, 'end')
     main_entry_key.delete(0, 'end')
         
@@ -49,39 +53,69 @@ def call_encipher():
             key = int(key)
         except Exception as e:
             output = 'Key needs to be an integer number between 1 and 25'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END)
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         if key<=0 or key>=26:
             output = 'Key needs to be an integer number between 1 and 25'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return    
         output = shift_cipher.shift_encipher(plaintext, key)
-        result.configure(text=f'The ciphertext is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='caesar'):
         output = caesar_cipher.caesar_encipher(plaintext)
-        result.configure(text=f'The ciphertext is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='monoalpha'):
         output = monoalphabetic_cipher.monoalphabetic_encipher(plaintext)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='polyalpha'):
         key = keyvalue.get()
+        if (len(plaintext)<len(key)):
+            key = key[len(plaintext)]
         key = key.upper()
         plaintext = plaintext.upper()
         parse=''
         for element in key:
             if element not in atoz and  element not in ATOZ:
                 output = 'Key can have only alphabetical characters'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
             else:
                 parse+=element        
         key = parse
         if key=='' or len(key)<=0:
             output = 'No key entered or key is too small'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return             
         output = polyalphabetic_cipher.polyalphabetic_encipher(plaintext,key.upper()).lower()
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='playfair'):
         key = keyvalue.get()
@@ -90,24 +124,58 @@ def call_encipher():
         for element in key:
             if element not in atoz and  element not in ATOZ and element!=' ':
                 output = 'Key can have only alphabetical characters'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
             else:
                 parse+=element        
         key = parse
         if key=='' or len(key)<=0:
             output = 'No key entered or key is too small'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         output = playfair_cipher.playfair_encipher(plaintext,key)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return   
         pass
     elif(var=='otp'):
         output = otp.otp_encipher(plaintext)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif(var=='hill'):
+        plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+            else:
+                parse+=element        
+        plaintext = parse
+        parse = ''
+        for element in plaintext:
+            if element!=' ':
+                parse+=element
+            else:
+                pass
+        plaintext = parse
         key = keyvalue.get()
         key = key.split(',')
         new = []
@@ -116,14 +184,21 @@ def call_encipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
         n = len(key)
         if(n<=1):
             output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
-            result.configure(text=f'{output}')
+            output = f'The ciphertext is {output}'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         if(math.ceil(math.sqrt(n)) == math.floor(math.sqrt(n))):
             size = math.ceil(math.sqrt(n))
@@ -135,14 +210,34 @@ def call_encipher():
             key = new
             key = np.matrix(key)
             output = hill_cipher.hill_encipher(plaintext,key)
-            result.configure(text=f'The cipher text is {output}')
+            output = f'The ciphertext is {output}'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         else:
             output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
     elif (var=='railfence'):
         plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+            else:
+                parse+=element        
+        plaintext = parse
+
         new = ''
         for element in plaintext:
             if element not in atoz:
@@ -155,7 +250,10 @@ def call_encipher():
             key = int(key)
         except Exception as e:
             output = 'Key needs to be an integer number'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END)
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         output = railfence.railfence_encipher(plaintext,key)
         new = ''
@@ -165,7 +263,11 @@ def call_encipher():
             else:
                 new += element
         output = new
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='columnar'):
         key = keyvalue.get()
@@ -176,11 +278,26 @@ def call_encipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Enter a list of numbers between 1 and n in any order of size n'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END)
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
         plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+            else:
+                parse+=element        
+        plaintext = parse
         parse=''
         for element in plaintext:
             if element not in atoz:
@@ -189,7 +306,11 @@ def call_encipher():
                 parse += element
         plaintext = parse
         output = columnar.columnar_transposition_encipher(plaintext,key)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='keycolumnar'):
         key = keyvalue.get()
@@ -200,11 +321,26 @@ def call_encipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Enter a list of numbers between 1 and n in any order of size n'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END)
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
         plaintext = plaintext.lower()
+        parse=''
+        for element in plaintext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+            else:
+                parse+=element        
+        plaintext = parse
         parse=''
         for element in plaintext:
             if element not in atoz:
@@ -213,7 +349,11 @@ def call_encipher():
                 parse += element
         plaintext = parse
         output = keyed_columnar_transposition_cipher.keyed_columnar_transposition_encipher(plaintext,key)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The ciphertext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     else:
         pass
@@ -226,7 +366,7 @@ def call_decipher():
     global plain 
     global keyvalue
     output = ''
-    ciphertext = plain.get()
+    ciphertext = plain.get().lower()
     var = choice.get()
     if(var=='shift'):
         key = keyvalue.get()
@@ -234,64 +374,120 @@ def call_decipher():
             key = int(key)
         except Exception as e:
             output = 'Key needs to be an integer number between 1 and 25'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END)
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         if key<=0 or key>=26:
             output = 'Key needs to be an integer number between 1 and 25'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return    
-        output = shift_cipher.shift_decipher(ciphertext, key)
-        result.configure(text=f'The ciphertext is {output}')
+        output = shift_cipher.shift_decipher(ciphertext, key).lower()
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='caesar'):
         output = caesar_cipher.caesar_decipher(ciphertext)
-        result.configure(text=f'The ciphertext is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='monoalpha'):
         output = monoalphabetic_cipher.monoalphabetic_decipher(ciphertext)
-        output = output.lower()
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
     elif(var=='polyalpha'):
         key = keyvalue.get()
+        if (len(ciphertext)<len(key)):
+            key = key[:len(ciphertext)]
         key = key.upper()
-        ciphertext = ciphertext.upper()
         parse=''
         for element in key:
             if element not in atoz and  element not in ATOZ:
                 output = 'Key can have only alphabetical characters'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
             else:
                 parse+=element        
         key = parse
         if key=='' or len(key)<=0:
             output = 'No key entered or key is too small'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return             
         output = polyalphabetic_cipher.polyalphabetic_decipher(ciphertext.upper(),key.upper()).lower()
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='playfair'):
         key = keyvalue.get()
-        ciphertext = ciphertext
+        key = key
         parse=''
         for element in key:
             if element not in atoz and  element not in ATOZ and element!=' ':
                 output = 'Key can have only alphabetical characters'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
             else:
                 parse+=element        
         key = parse
         if key=='' or len(key)<=0:
             output = 'No key entered or key is too small'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         output = playfair_cipher.playfair_decipher(ciphertext,key)
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return   
         pass
     elif(var=='otp'):
-        output = otp.otp_encipher(ciphertext)
-        result.configure(text=f'The cipher text is {output}')
+        ciphertext = ciphertext.split(',')
+        new = []
+        for elements in ciphertext:
+            try:
+                new.append(int(elements))
+            except Exception as e:
+                output = 'Enter a list of numbers between 1 and n in any order of size n'
+                result.configure(state='normal')
+                result.delete(0,END)
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+                
+        ciphertext = new
+        output = otp.otp_decipher(ciphertext).lower()
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END) 
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif(var=='hill'):
         key = keyvalue.get()
@@ -302,14 +498,21 @@ def call_decipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
         n = len(key)
         if(n<=1):
             output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
-            result.configure(text=f'{output}')
+            output = f'The plaintext is {output}'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         if(math.ceil(math.sqrt(n)) == math.floor(math.sqrt(n))):
             size = math.ceil(math.sqrt(n))
@@ -321,14 +524,20 @@ def call_decipher():
             key = new
             key = np.matrix(key)
             output = hill_cipher.hill_decipher(ciphertext,key)
-            result.configure(text=f'The cipher text is {output}')
+            output = f'The plaintext is {output}'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         else:
             output = 'Matrix must be a sqaure matrix, i.e contain nxn elements where N is a Natural Number 2 onward'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
     elif (var=='railfence'):
-        ciphertext = ciphertext.lower()
         new = ''
         for element in ciphertext:
             if element not in atoz:
@@ -341,7 +550,10 @@ def call_decipher():
             key = int(key)
         except Exception as e:
             output = 'Key needs to be an integer number'
-            result.configure(text=f'{output}')
+            result.configure(state='normal')
+            result.delete(0,END)
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
             return
         output = railfence.railfence_decipher(ciphertext,key)
         new = ''
@@ -351,7 +563,11 @@ def call_decipher():
             else:
                 new += element
         output = new
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='columnar'):
         key = keyvalue.get()
@@ -362,11 +578,14 @@ def call_decipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Enter a list of numbers between 1 and n in any order of size n'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END)
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
-        ciphertext = ciphertext.lower()
+        
         parse=''
         for element in ciphertext:
             if element not in atoz:
@@ -375,8 +594,11 @@ def call_decipher():
                 parse += element
         ciphertext = parse
         output = columnar.columnar_transposition_decipher(ciphertext,key)
-        output = output.lower()
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     elif (var=='keycolumnar'):
         key = keyvalue.get()
@@ -387,11 +609,13 @@ def call_decipher():
                 new.append(int(keys))
             except Exception as e:
                 output = 'Enter a list of numbers between 1 and n in any order of size n'
-                result.configure(text=f'{output}')
+                result.configure(state='normal')
+                result.delete(0,END)
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
                 return
                 
         key = new
-        ciphertext = ciphertext.lower()
         parse=''
         for element in ciphertext:
             if element not in atoz:
@@ -400,12 +624,14 @@ def call_decipher():
                 parse += element
         ciphertext = parse
         output = keyed_columnar_transposition_cipher.keyed_columnar_transposition_decipher(ciphertext,key)
-        output = output.lower()
-        result.configure(text=f'The cipher text is {output}')
+        output = f'The plaintext is {output}'
+        result.configure(state='normal')
+        result.delete(0,END)
+        result.insert(0,output)
+        result.configure(state='readonly',bg="#63b8ff")
         return
     else:
         pass
-    pass
 
 
 #-Main Window-
@@ -431,26 +657,36 @@ height= window.winfo_screenheight()
 window.geometry("%dx%d" % (width, height))
 window.title('Cipher Desktop Application')
 window.resizable('false','false')
-window.configure(bg="#9992ff")
+window.configure(bg="#63b8ff")
 dropdown = OptionMenu(window, choice, *options)
 dropdown.place(relx = 0.45, rely = 0.35, relwidth=0.1, relheight=0.1)
 clear_window_text = Button(window,text="Clear", command = clearscreen)
 clear_window_text.place(relx=0.85, rely = 0, relwidth=0.05, relheight=0.05)
 exit_window = Button(window,text="Exit", command = window.destroy)
 exit_window.place(relx=0.95, rely = 0, relwidth=0.05, relheight=0.05)
-main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool", font=("Helvetica", 22), bg="#9992ff")
-main_window_text.place(relx=0.2, rely = 0, relwidth=0.6, relheight=0.2)
+logo = tk.PhotoImage(file='images/logo.png')
+logo_display = Text(window, bg="#63b8ff")
+logo_display.image_create(END,image = logo)
+logo_display.place(relx=0.05, rely = 0.05, relwidth=0.06, relheight=0.1)
+main_window_text0 = Label(window,text="Cryptography Mini Project",fg='#5f0f40', font=("Helvetica", 28), bg="#63b8ff")
+main_window_text0.place(relx=0.2, rely = 0, relwidth=0.6, relheight=0.05)
+main_window_textname0 = Label(window,text="Nobin Johnson ENG18CS0197",fg='#5f0f40', font=("Helvetica", 12), bg="#63b8ff")
+main_window_textname0.place(relx=0.2, rely = 0.1, relwidth=0.6, relheight=0.05)
+main_window_textname1= Label(window,text="Rahul Noronha ENG18CS0222",fg='#5f0f40', font=("Helvetica", 12), bg="#63b8ff")
+main_window_textname1.place(relx=0.2, rely = 0.15, relwidth=0.6, relheight=0.05)
+main_window_text = Label(window,text="Welcome to the Cipher Desktop Tool!",fg='#5f0f40', font=("Helvetica", 22), bg="#63b8ff")
+main_window_text.place(relx=0.2, rely = 0.05, relwidth=0.6, relheight=0.05)
 help_window_text = Button(window,text="Help", command = browser)
 help_window_text.place(relx=0.9, rely = 0, relwidth=0.05, relheight=0.05)
-result = Label(window, text='', font=("Helvetica", 22), bg="#9992ff" )
+result = Entry(window, bd=0, font=("Helvetica", 22), bg="#63b8ff" )
 result.place(relx=0.1, rely = 0.2, relwidth=0.8, relheight=0.1)
 main_entry_plain = Entry(window, textvariable=plain, width = 40)
 main_entry_plain.place(relx = 0.1, rely = 0.3, relwidth = 0.3, relheight = 0.2)
 main_entry_key = Entry(window, textvariable=keyvalue, width = 40)
 main_entry_key.place(relx = 0.6, rely = 0.3, relwidth = 0.3, relheight = 0.2)
-plaintext = Label(window,text='Enter the plaintext', bg="#9992ff", font=('Helvetice',12))
+plaintext = Label(window,text='Enter the plaintext/ciphertext',fg='#5f0f40', bg="#63b8ff", font=('Helvetice',12))
 plaintext.place(relx = 0.14, rely = 0.5, relwidth = 0.2, relheight = 0.1)
-key = Label(window,text='Enter the key', bg="#9992ff", font=('Helvetica',12))
+key = Label(window,text='Enter the key', fg='#5f0f40', bg="#63b8ff", font=('Helvetica',12))
 key.place(relx = 0.55, rely = 0.5, relwidth = 0.4, relheight = 0.1)
 main_enter_encipher = Button(window, text='Encipher', command = call_encipher)
 main_enter_encipher.place(relx = 0.3, rely = 0.7, relwidth = 0.2, relheight = 0.2)
