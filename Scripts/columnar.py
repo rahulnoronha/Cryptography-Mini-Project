@@ -39,17 +39,20 @@ def columnar_transposition_encipher(plaintext, key):
 def columnar_transposition_decipher(ciphertext, key):
     ciphertext = ciphertext.lower()
     key_map = dict(zip(key,range(0,len(key))))
-    col_wise = ['' for i in range(int(round(len(ciphertext)/len(key))))]
+    row_wise = ['' for i in range(int(round(len(ciphertext)/len(key))))]
     for i in range(int(round(len(ciphertext)/len(key)))):
         for j in range(len(key)):
-            col_wise[i]+= ciphertext[j*int(round(len(ciphertext)/len(key)))+i]
+            row_wise[i]+= ciphertext[i*len(key)+j]
+    print(row_wise)
     transposed = ['' for i in range(int(round(len(ciphertext)/len(key))))]
-    for ind,element in enumerate(col_wise):
+    for ind,element in enumerate(row_wise):
         for index in range(len(element)):
             transposed[ind]+=element[key_map[index+1]]   
     result_text = ''
-
-    for i in range(len(key)):
-        for element in transposed:
+    print(transposed)
+    for element in transposed:
+        for i in range(len(key)):
             result_text+= element[i]
     return result_text
+
+print(columnar_transposition_decipher('ruhlanornohubta',[1,4,3,5,2]))
