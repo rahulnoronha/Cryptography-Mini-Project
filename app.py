@@ -159,6 +159,12 @@ def call_encipher():
         plaintext = plaintext.lower()
         parse=''
         for element in plaintext:
+            if element!=' ':
+                parse+=element
+            else:
+                pass
+        plaintext = parse
+        for element in plaintext:
             if element not in atoz and  element not in ATOZ:
                 output = 'Plaintext can have only alphabetical characters'
                 result.configure(state='normal')
@@ -169,13 +175,7 @@ def call_encipher():
             else:
                 parse+=element        
         plaintext = parse
-        parse = ''
-        for element in plaintext:
-            if element!=' ':
-                parse+=element
-            else:
-                pass
-        plaintext = parse
+        
         key = keyvalue.get()
         key = key.split(',')
         new = []
