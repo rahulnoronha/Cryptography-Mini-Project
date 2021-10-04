@@ -54,5 +54,3 @@ def columnar_transposition_decipher(ciphertext, key):
         for i in range(len(key)):
             result_text+= element[i]
     return result_text
-
-print(columnar_transposition_decipher('ruhlanornohubta',[1,4,3,5,2]))
