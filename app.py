@@ -617,6 +617,26 @@ def call_decipher():
                 
         key = new
         parse=''
+        key = new
+        parse=''
+        for element in ciphertext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return
+            else:
+                parse+=element        
+        ciphertext = parse
+        parse=''
+        for element in ciphertext:
+            if element not in atoz:
+                pass
+            else:
+                parse += element
+        ciphertext = parse
         for element in ciphertext:
             if element not in atoz:
                 pass
