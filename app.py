@@ -27,14 +27,16 @@ def browser():
 
 def clearscreen():
     global result
+    global dropdown
     global main_entry_plain
     global main_entry_key
+    choice.set('shift')
     result.configure(state='normal')
     result.delete(0,END)
     result.insert(0,'')
-    result.configure(state='readonly',bg="#63b8ff")
     main_entry_plain.delete(0, 'end')
     main_entry_key.delete(0, 'end')
+    
         
 def call_encipher():
     atoz = string.ascii_lowercase
@@ -46,6 +48,22 @@ def call_encipher():
     global keyvalue
     output = ''
     plaintext = plain.get()
+    parse=''
+    for element in plaintext:
+        if element==' ':
+            pass
+        else:
+            parse += element
+    plaintext = parse
+    parse = ''
+    for element in plaintext:
+            if element not in atoz and  element not in ATOZ:
+                output = 'Plaintext can have only alphabetical characters'
+                result.configure(state='normal')
+                result.delete(0,END) 
+                result.insert(0,output)
+                result.configure(state='readonly',bg="#63b8ff")
+                return   
     var = choice.get()
     if(var=='shift'):
         key = keyvalue.get()
@@ -88,7 +106,12 @@ def call_encipher():
     elif(var=='polyalpha'):
         key = keyvalue.get()
         if (len(plaintext)<len(key)):
-            key = key[len(plaintext)]
+            output = 'Key has to be lesser than or equal to plaintext in length'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
+            return
         key = key.upper()
         plaintext = plaintext.upper()
         parse=''
@@ -164,6 +187,7 @@ def call_encipher():
             else:
                 pass
         plaintext = parse
+        parse = ''
         for element in plaintext:
             if element not in atoz and  element not in ATOZ:
                 output = 'Plaintext can have only alphabetical characters'
@@ -367,7 +391,26 @@ def call_decipher():
     global keyvalue
     output = ''
     ciphertext = plain.get().lower()
+    parse=''
+    for element in ciphertext:
+        if element==' ':
+            pass
+        else:
+            parse += element
+    ciphertext = parse
+    parse = ''
     var = choice.get()
+    if(var!='otp'):
+        for element in ciphertext:
+                if element not in atoz and  element not in ATOZ:
+                    output = 'Ciphertext can have only alphabetical characters'
+                    result.configure(state='normal')
+                    result.delete(0,END) 
+                    result.insert(0,output)
+                    result.configure(state='readonly',bg="#63b8ff")
+                    return  
+    else:
+        pass
     if(var=='shift'):
         key = keyvalue.get()
         try:
@@ -409,7 +452,12 @@ def call_decipher():
     elif(var=='polyalpha'):
         key = keyvalue.get()
         if (len(ciphertext)<len(key)):
-            key = key[:len(ciphertext)]
+            output = 'Key has to be lesser than or equal to ciphertext in length'
+            result.configure(state='normal')
+            result.delete(0,END) 
+            result.insert(0,output)
+            result.configure(state='readonly',bg="#63b8ff")
+            return
         key = key.upper()
         parse=''
         for element in key:
@@ -631,12 +679,6 @@ def call_decipher():
                 parse+=element        
         ciphertext = parse
         parse=''
-        for element in ciphertext:
-            if element not in atoz:
-                pass
-            else:
-                parse += element
-        ciphertext = parse
         for element in ciphertext:
             if element not in atoz:
                 pass
